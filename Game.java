@@ -1,21 +1,28 @@
 package TIC;
 
+import java.util.*;
+
 public class Game {
 
-	public static void main(String[] args) {
-		 char[] board1 = createBoard();
-		 System.out.println(board1);
-	}
+	public static void main(String[] args) {}
+	Scanner userInput=new Scanner(System.in);
+	
+		 char userLetter = chooseUserLetter1(userInput);
+		 char computerLetter = (userLetter == 'X') ? '0' : 'X';
+		 
+	
 
-    public static char[] createBoard()
-    {
-        char[] board=new char[10];
-        for(int index=0; index < board.length ; index++)
-        {
-            board[index]=' ';
-        }
-        return board;
+  private static char chooseUserLetter1(Scanner userInput) {
+    	System.out.print("choose your letter: ");
+   return userInput.next().toUpperCase().charAt(0);
     }
+
+
+
+	private char chooseUserLetter(Scanner userInput2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	}
 
