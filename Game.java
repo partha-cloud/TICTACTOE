@@ -1,52 +1,82 @@
 package TIC;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class Game {
 
-	public static void playerTurn() {
-        Scanner scan=new Scanner(System.in);
-        System.out.println("Please enter the position where you want to make your move (1-9): ");
+	 public static void main(String[] args)
+    {
 
-        Integer[] valid = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int pos = scan.nextInt();
-        if (Arrays.asList(valid).contains(pos) && checkEmpty(pos)) {
-            Object[] board = null;
-			Object player = null;
-			board[pos]=player;
-            showBoard();
-        }else {
-            System.out.println("Invalid Choice");
-            playerTurn();
+        char[] board = createBoard();
+        char UserLetter = chooseLetter();
+        char ComputerLetter;
+        if(UserLetter=='X')
+        {
+            ComputerLetter='O';
         }
+        else
+        {
+            ComputerLetter='X';
 
-    }
-
-    public static boolean checkEmpty(int pos) {
-        char[] board = null;
-		if(board[pos] == ' ') {
-            return true;
-        }else {
-            System.out.println("The Position you entered is already filled. Please select the position that is empty.");
-            playerTurn();
         }
-        return true;
+        System.out.println("Computer Letter is: " + ComputerLetter+" User Letter is : " + UserLetter);
+        showBoard(board);
+        getUserMove(board,UserLetter);
+        showBoard(board);
+
+    }
+    public static void getUserMove(char[] board,char symbol)
+    {
+        Scanner sc = new Scanner(System.in);
+        Integer[] validCells = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+        Boolean ocupied=false;
+        while (ocupied==false)
+        {
+            System.out.println("What is your next move ? (1-9");
+            int index = sc.nextInt();
+            if (Arrays.asList(validCells).contains(index) && isSpaceFree(board, index))
+            {
+                board[index] = symbol;
+                ocupied=true;
+            }
+            else
+            {
+                System.out.println("not between 1-9 or space is not free. Again enter between 1-9");
+            }
+        }
+    }
+    private static boolean isSpaceFree(char[] board, int index)
+    {
+        return board[index] == ' ';
+    }
+    public static char chooseLetter()
+    {
+        char symbol;
+        Scanner UserInput = new Scanner(System.in);
+        System.out.print("Enter your symbol");
+        symbol = UserInput.next().toUpperCase().charAt(0);
+        return symbol;
     }
 
-    public static void main(String[] args) {
-        makeEmpty();
-        playerTurn();
-        showBoard();
-        playerTurn();
+    public static void showBoard(char[] board)
+    {
+        System.out.println("\n" + board[1] + "  |  "  + board[2] + "  |  " + board[3]);
+        System.out.println("--------------");
+        System.out.println(" " + board[4] + "  |  "  + board[5] + "  |  " + board[6]);
+        System.out.println("--------------");
+        System.out.println(" " + board[7] + "  |  "  +board[8] + "  |  " + board[9]);
+        System.out.println("--------------");
     }
-
-	private static void showBoard() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void makeEmpty() {
-		// TODO Auto-generated method stub
-		
-	}
+    public static char[] createBoard()
+    {
+        char[] board = new char[10];
+        for(int index = 1; index < board.length; index++)
+        {
+            board[index] = ' ';
+        }
+        return  board;
+    }
 }
